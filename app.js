@@ -130,32 +130,45 @@ function exportarMovimientos() {
         4
     );
 
-    const blob = new Blob(
+    const capturista =
+        document.getElementById("capturista").value;
+
+    const nombreArchivo =
+        `AFI_PENDIENTES_${capturista.toUpperCase()}.json`;
+
+    const archivo = new File(
         [contenido],
+        nombreArchivo,
         {
             type: "application/json"
         }
     );
 
-    const url = URL.createObjectURL(blob);
+    if (navigator.share) {
 
-    const enlace = document.createElement("a");
+        navigator.share({
+            title: "AFI Pendientes",
+            text: "Movimientos pendientes AFI",
+            files: [archivo]
+        });
 
-    enlace.href = url;
+    } else {
 
-    const capturista =
-        document.getElementById("capturista").value;
+        const url = URL.createObjectURL(archivo);
 
-    enlace.download =
-        `AFI_PENDIENTES_${capturista.toUpperCase()}.json`;
+        const enlace = document.createElement("a");
 
-    document.body.appendChild(enlace);
+        enlace.href = url;
+        enlace.download = nombreArchivo;
 
-    enlace.click();
+        document.body.appendChild(enlace);
 
-    document.body.removeChild(enlace);
+        enlace.click();
 
-    URL.revokeObjectURL(url);
+        document.body.removeChild(enlace);
+
+        URL.revokeObjectURL(url);
+    }
 
     movimientos.forEach(m => {
 
