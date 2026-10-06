@@ -231,3 +231,32 @@ function exportarMovimientoIndividual(movimiento) {
 
     URL.revokeObjectURL(url);
 }
+
+async function cargarCategorias() {
+
+    const respuesta =
+        await fetch("categorias.json");
+
+    const categorias =
+        await respuesta.json();
+
+    const select =
+        document.getElementById("categoria");
+
+    select.innerHTML = "";
+
+    categorias.forEach(categoria => {
+
+        const opcion =
+            document.createElement("option");
+
+        opcion.value = categoria;
+        opcion.textContent = categoria;
+
+        select.appendChild(opcion);
+
+    });
+
+}
+
+cargarCategorias();
