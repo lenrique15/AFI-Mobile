@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AFI Mobile</title>
+
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <div class="contenedor">
+
+        <h1>💰 AFI Mobile</h1>
+
+        <p class="subtitulo">
+            Captura rápida de movimientos
+        </p>
+
+        <label>Capturista</label>
+
+        <select id="capturista">
+            <option>Luis</option>
+            <option>Viri</option>
+        </select>
+
+        <label>Tipo</label>
+
+        <select id="tipo">
+            <option>Gasto</option>
+            <option>Ingreso</option>
+        </select>
+
+        <label>Monto</label>
+        <input
+            type="number"
+            id="monto"
+            placeholder="0.00"
+            step="0.01">
+
+        <div class="frecuentes">
+
+            <button type="button" onclick="seleccionarCategoria('Gasolina')">
+                ⛽ Gasolina
+            </button>
+
+            <button type="button" onclick="seleccionarCategoria('Alimentación')">
+                🍔 Alimentación
+            </button>
+
+            <button type="button" onclick="seleccionarCategoria('Servicios mensuales')">
+                🏠 Servicios mensuales
+            </button>
+
+            <button type="button" onclick="seleccionarCategoria('Servicio doméstico')">
+                🧹 Servicio doméstico
+            </button>
+
+        </div>
+
+        <label>Categoría</label>
+        <input
+            type="text"
+            id="categoria"
+            placeholder="Ej. Combustible">
+
+        <label>Concepto</label>
+        <input
+            type="text"
+            id="concepto"
+            placeholder="BP Ruiz Cortines">
+
+        <button onclick="guardarMovimiento()">
+            Guardar
+        </button>
+        
+        <button onclick="exportarMovimientos()">
+            📤 Exportar JSON
+        </button>
+
+        <p id="mensaje"></p>
+
+    <hr>
+
+    <h3>Últimos movimientos</h3>
+
+    <div id="historial">
+
+    </div>
+
+    <script src="app.js"></script>
+
+</body>
+
+</html>
