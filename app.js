@@ -57,7 +57,8 @@ async function guardarMovimiento() {
         tipo: tipo,
         categoria: categoria,
         concepto: concepto,
-        monto: Number(monto)
+        monto: Number(monto),
+        sincronizado:false
     };
 
     let movimientos = JSON.parse(
@@ -114,13 +115,17 @@ function exportarMovimientos() {
         localStorage.getItem("afi_movimientos") || "[]"
     );
 
-    if (movimientos.length === 0) {
-        alert("No hay movimientos para exportar.");
+    let pendientes = movimientos.filter(
+        m => m.sincronizado !== true
+    );
+
+    if (pendientes.length === 0) {
+        alert("No hay movimientos pendientes para exportar.");
         return;
     }
 
     const contenido = JSON.stringify(
-        movimientos,
+        pendientes,
         null,
         4
     );
@@ -137,7 +142,12 @@ function exportarMovimientos() {
     const enlace = document.createElement("a");
 
     enlace.href = url;
-    enlace.download = "afi_movimientos.json";
+
+    const capturista =
+        document.getElementById("capturista").value;
+
+    enlace.download =
+        `AFI_PENDIENTES_${capturista.toUpperCase()}.json`;
 
     document.body.appendChild(enlace);
 
@@ -147,8 +157,21 @@ function exportarMovimientos() {
 
     URL.revokeObjectURL(url);
 
+    movimientos.forEach(m => {
+
+        if (m.sincronizado !== true) {
+            m.sincronizado = true;
+        }
+
+    });
+
+    localStorage.setItem(
+        "afi_movimientos",
+        JSON.stringify(movimientos)
+    );
+
     document.getElementById("mensaje").innerText =
-        "✅ Archivo exportado";
+        `✅ ${pendientes.length} movimientos exportados`;
 }
 
 function seleccionarCategoria(categoria) {
