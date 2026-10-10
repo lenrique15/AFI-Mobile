@@ -147,8 +147,6 @@ function exportarMovimientos() {
     if (navigator.share) {
 
         navigator.share({
-            title: "AFI Pendientes",
-            text: "Movimientos pendientes AFI",
             files: [archivo]
         });
 
